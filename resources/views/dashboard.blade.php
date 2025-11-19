@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,14 +11,13 @@
 </head>
 <body class="bg-gray-50">
 
-  <!-- Navbar -->
+  <!-- Navbar
   <nav class="bg-white shadow-sm p-4 flex justify-between items-center">
   <div class="flex items-center space-x-4">
     <span class="text-xl font-bold text-blue-600">Campus Event System</span>
     <a href="{{ route('dashboard') }}" class="text-blue-600 font-medium bg-blue-100 px-3 py-1 rounded">Event</a>
     <a href="{{ route('kategori') }}" class="text-gray-600 hover:text-blue-600">Kategori</a>
     <a href="{{ route('profile') }}" class="text-gray-600 hover:text-blue-600">Profile</a>
-    <a href="{{ route('sertifikat') }}" class="text-gray-600 hover:text-blue-600">Sertifikat</a>
     <a href="{{ route('riwayat') }}" class="text-gray-600 hover:text-blue-600">Riwayat</a>
     <a href="{{ route('tentang') }}" class="text-gray-600 hover:text-blue-600">Tentang</a>
     <a href="{{ route('faq') }}" class="text-gray-600 hover:text-blue-600">FAQ</a>
@@ -25,24 +27,55 @@
     <div class="text-right">
       <p class="font-semibold text-gray-800">{{ Auth::user()->name ?? 'Nama User' }}</p>
       <p class="text-sm text-gray-500">{{ Auth::user()->nim ?? 'NIM' }}</p>
-    </div>
-    <a href="{{ route('logout') }}" class="text-red-600 hover:underline">Keluar</a>
-  </div>
-  </nav>
+  </nav> -->
 
-   @if(session('login_success'))
-  <div class="max-w-md mx-auto mt-6 alert-fade">
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded text-center shadow">
-      {{ session('login_success') }}
-    </div>
+@if(session('login_success'))
+  <div id="toast-login-success" 
+       class="fixed top-8 left-1/2 transform -translate-x-1/2 bg-green-100 border-2 border-green-500 text-green-800 
+              px-10 py-5 rounded-2xl shadow-2xl z-50 text-center font-semibold text-lg md:text-xl animate-fade-in-down">
+    {{ session('login_success') }}
   </div>
+
+  <script>
+    // Hilangkan otomatis setelah 3 detik
+    setTimeout(() => {
+      const toast = document.getElementById('toast-login-success');
+      if (toast) {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 600);
+      }
+    }, 3000);
+  </script>
+
+  <style>
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+    .animate-fade-in-down {
+      animation: fadeInDown 0.5s ease-out;
+    }
+    .opacity-0 {
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+    .translate-y-2 {
+      transform: translate(-50%, -10px);
+    }
+  </style>
 @endif
 
 
-  <!-- Daftar Event -->
+ <!-- Daftar Event -->
   <div class="max-w-7xl mx-auto px-6 py-10">
-    <h1 class="text-2xl font-bold mb-2">Daftar Event Kampus</h1>
-    <p class="text-gray-600 mb-6">Temukan dan daftar event yang sesuai dengan minatmu</p>
+    <h1 class="text-2xl font-bold mb-2">Event Kampus</h1>
+    <p class="text-gray-600 mb-6">Jelajahi berbagai kategori event yang tersedia di kampus</p>
 
     <!-- Pencarian -->
     <input type="text" placeholder="Cari event..." class="w-full border rounded-lg p-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -55,15 +88,9 @@
   <div class="bg-white rounded-lg shadow p-4">
     <img src="https://tanyadigital.com/wp-content/uploads/2023/05/workshop-adalah.jpg" class="w-full h-48 object-cover rounded-lg mb-3">
     <span class="text-sm bg-blue-100 text-blue-600 px-2 py-0.5 rounded">Workshop</span>
-    <h3 class="font-bold mt-2">Workshop Pengembangan Web</h3>
-    <p class="text-gray-600 text-sm mt-1">Pelajari cara membuat aplikasi web modern...</p>
+    <h3 class="font-bold mt-2">Workshop</h3>
+    <p class="text-gray-600 text-sm mt-1">Membangun keterampilan, membangun masa depan, Yuk ikuti workshop yang ada di kampus kami!</p>
     <div class="flex items-center space-x-2 text-sm text-gray-500 mt-3">
-      <span>📅 15 Nov 2025</span>
-      <span>⏰ 09:00 - 16:00</span>
-    </div>
-    <div class="mt-4 flex justify-between">
-      <button onclick="showDetail('Workshop Pengembangan Web', 'Pelajari cara membuat aplikasi web modern menggunakan React dan TypeScript.', '15 November 2025', '09:00 - 16:00 WIB', 'Lab Komputer Gedung A Lt. 3', '28 / 40 peserta', 'Laptop, dasar programming')" class="border px-4 py-1 rounded">Detail</button>
-      <button onclick="openRegisterModal(this, 'Workshop Pengembangan Web')" class="bg-black text-white px-4 py-1 rounded">Daftar</button>
     </div>
   </div>
 
@@ -71,15 +98,11 @@
   <div class="bg-white rounded-lg shadow p-4">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8canmLfWQJns5mmOddsqfnnFNMB2XCxrB9g&s" class="w-full h-48 object-cover rounded-lg mb-3">
     <span class="text-sm bg-yellow-100 text-yellow-600 px-2 py-0.5 rounded">Seminar</span>
-    <h3 class="font-bold mt-2">Seminar Kepemimpinan Mahasiswa</h3>
-    <p class="text-gray-600 text-sm mt-1">Bangun karakter dan kepemimpinan yang inspiratif.</p>
+    <h3 class="font-bold mt-2">Seminar Nasional dan Internasional</h3>
+    <p class="text-gray-600 text-sm mt-1">Yuk, Ikuti Seminar Inspiratif 2025!”
+Dapatkan ilmu baru, tips sukses, dan inspirasi langsung dari para ahli.
+Jangan lewatkan kesempatan untuk memperluas wawasan dan jaringanmu!</p>
     <div class="flex items-center space-x-2 text-sm text-gray-500 mt-3">
-      <span>📅 20 Nov 2025</span>
-      <span>⏰ 08:00 - 12:00</span>
-    </div>
-    <div class="mt-4 flex justify-between">
-      <button onclick="showDetail('Seminar Kepemimpinan Mahasiswa', 'Bangun karakter dan kepemimpinan yang inspiratif dengan pembicara nasional.', '20 November 2025', '08:00 - 12:00 WIB', 'Aula Utama Kampus', '50 / 100 peserta', 'Mahasiswa aktif, berpakaian rapi')" class="border px-4 py-1 rounded">Detail</button>
-      <button onclick="openRegisterModal(this, 'Seminar Kepemimpinan Mahasiswa')" class="bg-black text-white px-4 py-1 rounded">Daftar</button>
     </div>
   </div>
 
@@ -87,15 +110,11 @@
   <div class="bg-white rounded-lg shadow p-4">
     <img src="https://animasistudio.com/wp-content/uploads/2023/11/Video-Animasi-vs-Video-Biasa-Mana-yang-Lebih-Efektif-untuk-Pemasaran-1024x683.jpg" class="w-full h-48 object-cover rounded-lg mb-3">
     <span class="text-sm bg-green-100 text-green-600 px-2 py-0.5 rounded">Kompetisi</span>
-    <h3 class="font-bold mt-2">Lomba Desain Poster Nasional</h3>
-    <p class="text-gray-600 text-sm mt-1">Tunjukkan kreativitasmu melalui karya visual terbaik!</p>
+    <h3 class="font-bold mt-2">Lomba Antar Mahasiswa</h3>
+    <p class="text-gray-600 text-sm mt-1">Tunjukkan Potensimu, Wujudkan Prestasimu!
+Ayo ikut serta dalam Event Lomba Mahasiswa 2025!
+Beragam kategori lomba seru siap menantang kreativitas, sportivitas, dan semangat juangmu.</p>
     <div class="flex items-center space-x-2 text-sm text-gray-500 mt-3">
-      <span>📅 25 Nov 2025</span>
-      <span>⏰ 10:00 - 17:00</span>
-    </div>
-    <div class="mt-4 flex justify-between">
-      <button onclick="showDetail('Lomba Desain Poster Nasional', 'Kompetisi desain poster tingkat nasional bertema kreativitas digital mahasiswa.', '25 November 2025', '10:00 - 17:00 WIB', 'Auditorium Utama', '35 / 60 peserta', 'Membawa laptop dan software desain grafis')" class="border px-4 py-1 rounded">Detail</button>
-      <button onclick="openRegisterModal(this, 'Lomba Desain Poster Nasional')" class="bg-black text-white px-4 py-1 rounded">Daftar</button>
     </div>
   </div>
 
@@ -104,14 +123,10 @@
     <img src="https://pophariini.com/wp-content/uploads/2022/08/WhatsApp-Image-2022-08-14-at-20.33.13.jpeg" class="w-full h-48 object-cover rounded-lg mb-3">
     <span class="text-sm bg-pink-100 text-pink-600 px-2 py-0.5 rounded">Hiburan</span>
     <h3 class="font-bold mt-2">Music Fest Kampus 2025</h3>
-    <p class="text-gray-600 text-sm mt-1">Nikmati malam penuh musik dan keceriaan!</p>
+    <p class="text-gray-600 text-sm mt-1">Yuk, Ikuti Music Fest Kampus 2025!
+Nikmati penampilan band kampus, solo akustik, dan musik seru lainnya.
+Kesempatan seru untuk bersantai, berkumpul, dan menikmati musik bareng teman-teman!</p>
     <div class="flex items-center space-x-2 text-sm text-gray-500 mt-3">
-      <span>📅 5 Des 2025</span>
-      <span>⏰ 18:00 - 22:00</span>
-    </div>
-    <div class="mt-4 flex justify-between">
-      <button onclick="showDetail('Music Fest Kampus 2025', 'Festival musik tahunan menampilkan band dan solois terbaik kampus.', '5 Desember 2025', '18:00 - 22:00 WIB', 'Lapangan Utama Kampus', '500 / 700 penonton', 'Tiket gratis untuk mahasiswa')" class="border px-4 py-1 rounded">Detail</button>
-      <button onclick="openRegisterModal(this, 'Music Fest Kampus 2025')" class="bg-black text-white px-4 py-1 rounded">Daftar</button>
     </div>
   </div>
 
@@ -119,15 +134,11 @@
   <div class="bg-white rounded-lg shadow p-4">
     <img src="https://cdn.rri.co.id/berita/Ternate/o/1718345904482-dddooooo/b4ngrx7lsnpbbbt.avif" class="w-full h-48 object-cover rounded-lg mb-3">
     <span class="text-sm bg-red-100 text-red-600 px-2 py-0.5 rounded">Sosial</span>
-    <h3 class="font-bold mt-2">Aksi Donor Darah Mahasiswa</h3>
-    <p class="text-gray-600 text-sm mt-1">Bersama kita bantu sesama dengan setetes darah.</p>
+    <h3 class="font-bold mt-2">Aksi Kegiatan Sosial dan Masyarakat</h3>
+    <p class="text-gray-600 text-sm mt-1">Aksi Sosial Mahasiswa – Bersama Peduli Sesama!
+Bergabunglah dalam kegiatan yang membawa dampak nyata bagi masyarakat.
+Satu langkah kecil dari kita, berarti harapan besar bagi mereka yang membutuhkan.</p>
     <div class="flex items-center space-x-2 text-sm text-gray-500 mt-3">
-      <span>📅 10 Des 2025</span>
-      <span>⏰ 08:00 - 15:00</span>
-    </div>
-    <div class="mt-4 flex justify-between">
-      <button onclick="showDetail('Aksi Donor Darah Mahasiswa', 'Kegiatan sosial untuk membantu PMI dalam memenuhi kebutuhan darah.', '10 Desember 2025', '08:00 - 15:00 WIB', 'Aula Rektorat Lt. 2', '60 / 100 peserta', 'Sehat jasmani dan sudah sarapan')" class="border px-4 py-1 rounded">Detail</button>
-      <button onclick="openRegisterModal(this, 'Aksi Donor Darah Mahasiswa')" class="bg-black text-white px-4 py-1 rounded">Daftar</button>
     </div>
   </div>
 
@@ -135,15 +146,11 @@
   <div class="bg-white rounded-lg shadow p-4">
     <img src="https://cdn.rri.co.id/berita/Atambua/o/1739468905663-bc6d82075c1a31c5bc266b26b4cf0c5e/h4fkdetws4n9097.jpeg" class="w-full h-48 object-cover rounded-lg mb-3">
     <span class="text-sm bg-purple-100 text-purple-600 px-2 py-0.5 rounded">Olahraga</span>
-    <h3 class="font-bold mt-2">Turnamen Futsal Antar Fakultas</h3>
-    <p class="text-gray-600 text-sm mt-1">Dukung fakultasmu meraih gelar juara kampus!</p>
+    <h3 class="font-bold mt-2">Turnamen Antar Prodi dan Fakultas</h3>
+    <p class="text-gray-600 text-sm mt-1">Bersaing, Berkarya, Menang Bersama!
+Turnamen antar fakultas hadir untuk mengasah skill, sportivitas, dan kerja tim.
+Tunjukkan semangat fakultasmu dan jadilah yang terbaik di setiap pertandingan!</p>
     <div class="flex items-center space-x-2 text-sm text-gray-500 mt-3">
-      <span>📅 12 Des 2025</span>
-      <span>⏰ 13:00 - 17:00</span>
-    </div>
-    <div class="mt-4 flex justify-between">
-      <button onclick="showDetail('Turnamen Futsal Antar Fakultas', 'Ajang kompetisi futsal antar fakultas untuk mempererat solidaritas mahasiswa.', '12 Desember 2025', '13:00 - 17:00 WIB', 'Lapangan Indoor Kampus', '10 / 12 tim', 'Setiap tim terdiri dari 7 pemain')" class="border px-4 py-1 rounded">Detail</button>
-      <button onclick="openRegisterModal(this, 'Turnamen Futsal Antar Fakultas')" class="bg-black text-white px-4 py-1 rounded">Daftar</button>
     </div>
   </div>
 
@@ -238,6 +245,7 @@
     </form>
   </div>
 </div>
+@endsection
 <script>
   // deklarasi global
   let currentEventButton = null;
@@ -307,11 +315,37 @@
   });
 
 </script>
+<script>
+  // 🔍 Fitur Pencarian Event
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.querySelector('input[placeholder="Cari event..."]');
+    const eventCards = document.querySelectorAll(".grid .bg-white.rounded-lg.shadow.p-4");
+
+    searchInput.addEventListener("input", function () {
+      const keyword = this.value.toLowerCase().trim();
+
+      eventCards.forEach(card => {
+        const title = card.querySelector("h3")?.innerText.toLowerCase() || "";
+        const category = card.querySelector("span")?.innerText.toLowerCase() || "";
+        const description = card.querySelector("p")?.innerText.toLowerCase() || "";
+
+        // Cek apakah kata kunci cocok dengan judul, kategori, atau deskripsi
+        const isMatch =
+          title.includes(keyword) ||
+          category.includes(keyword) ||
+          description.includes(keyword);
+
+        // Tampilkan hanya yang cocok
+        if (isMatch) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    });
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-
 </body>
-</html>
+</html> 

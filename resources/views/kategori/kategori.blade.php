@@ -1,31 +1,58 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@yield('title') - Campus Event System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
 
-@section('content')
-<div class="text-center mb-10">
-  <h1 class="text-3xl font-bold text-gray-800 mb-2">Kategori Event</h1>
-  <p class="text-gray-600">Jelajahi berbagai kategori acara kampus yang menarik!</p>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-  @foreach($kategori as $item)
-  <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition">
-    <img src="{{ $item['gambar'] }}" alt="{{ $item['nama'] }}" class="h-48 w-full object-cover">
-    <div class="p-5">
-      <h2 class="text-xl font-semibold text-gray-800 mb-2">
-        {{ $item['icon'] }} {{ $item['nama'] }}
-      </h2>
-      <p class="text-gray-600 text-sm mb-3">{{ $item['deskripsi'] }}</p>
-      <p class="text-sm text-blue-600 font-semibold mb-2">
-        {{ $item['jumlah_event'] }} Event Terdaftar
-      </p>
-      <p class="text-gray-700 text-sm"><strong>Event Populer:</strong></p>
-      <ul class="list-disc list-inside text-gray-600 text-sm">
-        @foreach($item['event_populer'] as $event)
-        <li>{{ $event }}</li>
-        @endforeach
-      </ul>
+  {{-- Navbar (sama seperti dashboard) --}}
+  <nav class="bg-white shadow p-4 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <h1 class="text-xl font-bold text-blue-600">Campus Event System</h1>
+      <div class="space-x-4">
+        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">Event</a>
+        <a href="{{ route('kategori') }}" class="{{ request()->routeIs('kategori') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">Kategori</a>
+        <a href="{{ route('profile') }}" class="{{ request()->routeIs('profile') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">Profile</a>
+        <a href="{{ route('sertifikat') }}" class="{{ request()->routeIs('sertifikat') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">Sertifikat</a>
+        <a href="{{ route('riwayat') }}" class="{{ request()->routeIs('riwayat') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">Riwayat</a>
+        <a href="{{ route('tentang') }}" class="{{ request()->routeIs('tentang') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">Tentang</a>
+        <a href="{{ route('faq') }}" class="{{ request()->routeIs('faq') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">FAQ</a>
+        <a href="{{ route('kontak') }}" class="{{ request()->routeIs('kontak') ? 'bg-blue-100 text-blue-600 font-medium px-3 py-1 rounded' : 'text-gray-700 hover:text-blue-600' }}">Kontak</a>
+      </div>
     </div>
-  </div>
-  @endforeach
-</div>
-@endsection
+    <div class="flex items-center space-x-4">
+      <div class="text-right">
+        <p class="font-semibold text-gray-800">{{ Auth::user()->name ?? 'Nama User' }}</p>
+        <p class="text-sm text-gray-500">{{ Auth::user()->nim ?? 'NIM' }}</p>
+      </div>
+      <form id="logoutForm" action="{{ route('logout') }}" method="POST">
+      @csrf
+      <button type="button" class="text-red-600 hover:underline" onclick="confirmLogout()">
+          Keluar
+      </button>
+      </form>
+      <script>
+      function confirmLogout() {
+          if (confirm('Apakah Anda Yakin Akan Keluar?')) {
+              document.getElementById('logoutForm').submit();
+          }
+      }
+      </script>
+    </div>
+  </nav>
+
+  {{-- Konten halaman --}}
+  <main class="max-w-6xl mx-auto mt-8 px-6 me-2">
+    @yield('content')
+  </main>
+
+  {{-- Footer --}}
+  <footer class="text-center text-gray-500 text-sm py-4 mt-12">
+    &copy; {{ date('Y') }} Campus Event System. All rights reserved.
+  </footer>
+
+</body>
+</html>
