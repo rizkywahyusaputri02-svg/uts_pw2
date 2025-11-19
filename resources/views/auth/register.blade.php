@@ -24,7 +24,7 @@
     <div class="content text-center">
       <div class="text-5xl mb-4">🎓</div>
       <h1 class="text-2xl font-semibold">Pendaftaran Event Kampus</h1>
-      <p class="mt-3 text-lg">Universitas Islam Negeri Sultan Thaha Saifuddin Jambi</p>
+      <p class="mt-3 text-lg">Jelajahi berbagai kategori event yang tersedia</p>
     </div>
   </div>
 
@@ -64,7 +64,7 @@
         <input type="text" name="nim" class="w-full border rounded p-2 mb-3" placeholder="NIM" required>
 
         <label class="block mb-1 text-gray-700">Email</label>
-        <input type="email" name="email" class="w-full border rounded p-2 mb-3" placeholder="email@mahasiswa.ac.id" required>
+        <input type="email" name="email" class="w-full border rounded p-2 mb-3" placeholder="email@gmail.com" required>
 
         <label class="block mb-1 text-gray-700">No. Telepon</label>
         <input type="text" name="phone" class="w-full border rounded p-2 mb-3" placeholder="08xxxxxxxxxx" required>

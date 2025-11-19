@@ -24,7 +24,7 @@
     <div class="content text-center">
       <div class="text-5xl mb-4">🎓</div>
       <h1 class="text-2xl font-semibold">Pendaftaran Event Kampus</h1>
-      <p class="mt-3 text-lg">Universitas Islam Negeri Sultan Thaha Saifuddin Jambi</p>
+      <p class="mt-3 text-lg">Jelajahi berbagai kategori event yang tersedia</p>
     </div>
   </div>
 
@@ -38,34 +38,23 @@
       </div>
 
       <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Masuk ke Akun</h2>
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+<!-- Pesan sukses -->
+@if(session('success'))
+  <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4 text-center">
+    {{ session('success') }}
+  </div>
 @endif
 
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
+<!-- Pesan error -->
+@if(session('error'))
+  <p class="text-red-500 text-sm mb-3 text-center">{{ session('error') }}</p>
 @endif
 
-      <!-- Pesan sukses dari register -->
-      @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4 text-center">
-          {{ session('success') }}
-        </div>
-      @endif
-
-      <!-- Pesan error -->
-      @if(session('error'))
-        <p class="text-red-500 text-sm mb-3 text-center">{{ session('error') }}</p>
-      @endif
 
       <form action="/login" method="POST">
         @csrf
         <label class="block mb-1 text-gray-700">Email</label>
-        <input type="email" name="email" class="w-full border rounded p-2 mb-3" placeholder="email@mahasiswa.ac.id" required>
+        <input type="email" name="email" class="w-full border rounded p-2 mb-3" placeholder="email@gmail.com" required>
 
         <label class="block mb-1 text-gray-700">Password</label>
         <input type="password" name="password" class="w-full border rounded p-2 mb-4" required>
